@@ -1,23 +1,23 @@
 {
-  "name": "portfolio-server",
-  "version": "1.0.0",
-  "description": "A Node.js API to retrieve data from a MongoDB database and serve it to my React Front-End.",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "github.com/aliceroherty/portfolio-server"
-  },
-  "author": "Alice Roherty-Carrier",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.18.2",
-    "mongoose": "^7.1.0"
-  },
-  "devDependencies": {
-    "dotenv": "^16.0.3",
-    "nodemon": "^2.0.22"
-  }
+	"name": "portfolio-server",
+	"version": "1.0.0",
+	"description": "A Node.js API to retrieve data from a MongoDB database and serve it to my React Front-End.",
+	"main": "app.js",
+	"scripts": {
+		"dev": "nodemon app.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "github.com/aliceroherty/portfolio-server"
+	},
+	"author": "Alice Roherty-Carrier",
+	"license": "ISC",
+	"dependencies": {
+		"express": "^4.18.2",
+		"mongoose": "^7.1.0"
+	},
+	"devDependencies": {
+		"dotenv": "^16.0.3",
+		"nodemon": "^2.0.22"
+	}
 }
