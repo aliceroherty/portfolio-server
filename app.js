@@ -23,4 +23,7 @@ app.use(express.json());
 const projectRouter = require('./routes/projects');
 app.use('/projects', projectRouter);
 
+const authorizationRouter = require('./routes/authorization');
+app.use('/auth', authorizationRouter);
+
 app.listen(3000, () => console.log('Server listening on port 3000...'));
