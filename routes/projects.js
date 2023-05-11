@@ -1,5 +1,6 @@
 const express = require('express');
 const Project = require('../models/project');
+const authenticateToken = require('../middleware/authentication');
 
 const router = express.Router();
 
@@ -21,7 +22,7 @@ const getProject = async (req, res, next) => {
 };
 
 // Read all projects
-router.get('/', async (req, res) => {
+router.get('/', authenticateToken, async (req, res) => {
 	try {
 		res.json(await Project.find());
 	} catch (error) {
@@ -30,12 +31,12 @@ router.get('/', async (req, res) => {
 });
 
 // Read project by id
-router.get('/:id', getProject, (req, res) => {
+router.get('/:id', authenticateToken, getProject, (req, res) => {
 	res.json(res.project);
 });
 
 // Create project
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken, async (req, res) => {
 	const project = new Project({
 		title: req.body.title,
 		imageUrl: req.body.imageUrl,
@@ -52,7 +53,7 @@ router.post('/', async (req, res) => {
 });
 
 // Update project
-router.patch('/:id', getProject, async (req, res) => {
+router.patch('/:id', authenticateToken, getProject, async (req, res) => {
 	if (req.body.title != null) res.project.title = req.body.title;
 
 	if (req.body.imageUrl != null) res.project.imageUrl = req.body.imageUrl;
@@ -71,7 +72,7 @@ router.patch('/:id', getProject, async (req, res) => {
 });
 
 // Delete project
-router.delete('/:id', getProject, async (req, res) => {
+router.delete('/:id', authenticateToken, getProject, async (req, res) => {
 	try {
 		await res.project.deleteOne();
 		res.json({ message: 'Deleted project' });
