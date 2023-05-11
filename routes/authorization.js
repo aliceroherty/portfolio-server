@@ -45,4 +45,10 @@ router.post('/refresh', (req, res) => {
 		res.status(500).json({ message: error.message });
 	}
 });
+
+router.delete('/logout', (req, res) => {
+	refreshTokens = refreshTokens.filter((token) => token !== req.body.token);
+	res.sendStatus(204);
+});
+
 module.exports = router;
