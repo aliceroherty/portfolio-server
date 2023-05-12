@@ -1,10 +1,8 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const Token = require('../models/token');
 
 const router = express.Router();
-
-// Refresh tokens should be stored in db collection in prod
-let refreshTokens = [];
 
 const generateAccessToken = (apiKey) => {
 	return jwt.sign({ apiKey }, process.env.ACCESS_TOKEN_SECRET, {
@@ -12,7 +10,7 @@ const generateAccessToken = (apiKey) => {
 	});
 };
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
 	try {
 		const apiKey = req.body.apiKey;
 		const accessToken = generateAccessToken(apiKey);
@@ -20,18 +18,23 @@ router.post('/login', (req, res) => {
 			{ apiKey },
 			process.env.REFRESH_TOKEN_SECRET
 		);
-		refreshTokens.push(refreshToken);
+
+		await new Token({
+			token: refreshToken,
+		}).save();
+
 		res.json({ accessToken, refreshToken });
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}
 });
 
-router.post('/refresh', (req, res) => {
+router.post('/refresh', async (req, res) => {
 	try {
+		const tokens = (await Token.find()).map(({ token }) => token);
 		const refreshToken = req.body.token;
 		if (refreshToken == null) return res.sendStatus(401);
-		if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403);
+		if (!tokens.includes(refreshToken)) return res.sendStatus(403);
 		jwt.verify(
 			refreshToken,
 			process.env.REFRESH_TOKEN_SECRET,
@@ -46,8 +49,8 @@ router.post('/refresh', (req, res) => {
 	}
 });
 
-router.delete('/logout', (req, res) => {
-	refreshTokens = refreshTokens.filter((token) => token !== req.body.token);
+router.delete('/logout', async (req, res) => {
+	await Token.deleteOne({ token: req.body.token });
 	res.sendStatus(204);
 });
 
