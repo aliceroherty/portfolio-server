@@ -13,6 +13,9 @@ const generateAccessToken = (apiKey) => {
 router.post('/login', async (req, res) => {
 	try {
 		const apiKey = req.body.apiKey;
+
+		if (apiKey != process.env.API_KEY) return res.sendStatus(403);
+
 		const accessToken = generateAccessToken(apiKey);
 		const refreshToken = jwt.sign(
 			{ apiKey },
