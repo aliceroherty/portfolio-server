@@ -31,6 +31,8 @@ app.use('/auth', authorizationRouter);
 
 app.use('/images', express.static('images'));
 
-app.listen(process.env.PORT, () =>
-	console.log(`Server listening on port ${process.env.PORT}...`)
-);
+db.on('connected', () => {
+	app.listen(process.env.PORT, () =>
+		console.log(`Server listening on port ${process.env.PORT}...`)
+	);
+});
