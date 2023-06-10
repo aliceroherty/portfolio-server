@@ -1,0 +1,11 @@
+[build]
+command = "echo Building Function"
+[functions]
+  external_node_modules = ["express"]
+  node_bundler = "esbuild"
+[[redirects]]
+  force = true
+  from = "*"
+  status = 200
+  to = "/.netlify/functions/api/:splat"
+  

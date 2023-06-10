@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const serverless = require('serverless-http');
 
 if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config();
@@ -31,6 +32,10 @@ app.use('/auth', authorizationRouter);
 
 app.use('/images', express.static('images'));
 
-app.listen(process.env.PORT, () =>
-	console.log(`Server listening on port ${process.env.PORT}...`)
-);
+if (process.env.NODE_ENV !== 'production') {
+	app.listen(process.env.PORT, () =>
+		console.log(`Server listening on port ${process.env.PORT}...`)
+	);
+}
+
+module.exports.handler = serverless(app);

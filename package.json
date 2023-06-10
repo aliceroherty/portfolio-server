@@ -4,7 +4,8 @@
 	"description": "A Node.js API to retrieve data from a MongoDB database and serve it to my React Front-End.",
 	"main": "app.js",
 	"scripts": {
-		"dev": "nodemon app.js"
+		"dev": "nodemon app.js",
+		"start": "node app.js"
 	},
 	"repository": {
 		"type": "git",
@@ -16,7 +17,8 @@
 		"cors": "^2.8.5",
 		"express": "^4.18.2",
 		"jsonwebtoken": "^9.0.0",
-		"mongoose": "^7.1.0"
+		"mongoose": "^7.1.0",
+		"serverless-http": "^3.2.0"
 	},
 	"devDependencies": {
 		"dotenv": "^16.0.3",
