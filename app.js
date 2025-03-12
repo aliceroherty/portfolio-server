@@ -29,6 +29,9 @@ app.use('/projects', projectRouter);
 const authorizationRouter = require('./routes/authorization');
 app.use('/auth', authorizationRouter);
 
+const corsRouter = require('./routes/cors')
+app.use('/', corsRouter)
+
 app.use('/images', express.static('images'));
 
 db.on('connected', () => {
