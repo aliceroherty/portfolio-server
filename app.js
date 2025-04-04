@@ -13,7 +13,11 @@ mongoose.connect(process.env.CONNECTION_STRING);
 const db = mongoose.connection;
 db.on('error', (error) => console.error(error));
 
-app.use(cors())
+app.use(
+	cors({
+		origin: process.env.CLIENT_URL,
+	})
+)
 
 app.use(express.json());
 
