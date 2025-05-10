@@ -24,7 +24,7 @@ const getProject = async (req, res, next) => {
 // Read all projects
 router.get('/', authenticateToken, async (req, res) => {
 	try {
-		res.json(await Project.find());
+		res.json(await Project.find().sort({ order: 1 }))
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}
